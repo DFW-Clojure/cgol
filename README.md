@@ -1,6 +1,6 @@
 # cgol
 
-A Clojure library designed to ... well, that part is up to you.
+Conway's Game of Life
 
 ## Usage
 
