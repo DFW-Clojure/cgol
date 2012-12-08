@@ -2,6 +2,10 @@
   (:use clojure.test
         cgol.core))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(deftest block
+  (let [seed     [[0 0 0 0]
+                  [0 1 1 0]
+                  [0 1 1 0]
+                  [0 0 0 0]]
+        expected seed]
+    (is (= expected (generate seed)))))
