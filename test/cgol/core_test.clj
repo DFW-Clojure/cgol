@@ -2,11 +2,24 @@
   (:use clojure.test
         cgol.core))
 
-(deftest board-test
-  (testing "Test board generation."
-    (are [w h out]
-         (= (board w h) out)
-          1  2  [[nil nil]]
-          2  1  [[nil] [nil]])
-    (is (thrown? AssertionError (board "string" 1)))
-    (is (thrown? AssertionError (board -1 -1)))))
+(deftest make-board-test
+  (testing "board creation"
+    (is 
+     (= (make-board 2)
+        [:off :off :off :off]))
+
+    (are [n final-count]
+     (= (count (make-board n))
+        final-count)
+     
+     1 1
+     2 4
+     3 9
+     4 16)))
+
+(deftest partition-board-test
+  (testing "transform flat board into a vector of vectors"
+    (is
+     (= (partition-board (make-board 2))
+        [[:off :off] [:off :off]]))
+    (is (thrown? AssertionError (partition-board [:off :off :off])))))

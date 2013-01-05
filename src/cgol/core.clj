@@ -1,35 +1,22 @@
-(ns cgol.core)
+(ns cgol.core
+  (:use [ clojure.math.numeric-tower 
+         :only (sqrt exact-integer-sqrt)]))
 
-(defn all-pos-int?
-  [& args]
-  (every?
-   #(and (integer? %) (pos? %))
-   args))
+(defn make-board
+  "Create a new square vector board given the edge length"
+  [n]
+  (vec (repeat (* n n) :off)))
 
-(defn board
-  "Make a game board"
-  [w h]
-  {:pre [(all-pos-int? w h)]}
-  (vec (repeat w
-               (vec (repeat h nil)))))
+(defn partition-board
+  "Take a flat vector board and partition it into a seq of seqs"
+  [board]
+  {:pre [(let [[n r] (exact-integer-sqrt (count board))]
+            (zero? r))]}
 
-(defn get-coord
-  "Get the liveness value of the given coordinate"
-  [x y]
-  {:pre [(all-pos-int? x y)]}
-  (get-in x y))
+  (let [n (sqrt (count board))]
+    (partition n board)))
 
-(defn set-coord
-  "Set the liveness value of the given coordinate"
-  [board x y liveness]
-  {:pre [(all-pos-int? x y)]}
-  (assoc-in board [x y] liveness))
-
-(defn seed
-  "A seq of x,y coords of live cells"
-  [board & lives]
-  (reduce
-   (fn [current-board [x y]]
-     (set-coord current-board x y :live))
-   board
-   lives))
+(defn print-board
+  "Pretty print a board"
+  [board]
+  )
